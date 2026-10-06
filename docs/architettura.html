@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Idelia — Architettura AWS</title>
+<style>
+  :root{
+    --navy:#232f3e; --orange:#ff9900; --blue:#146eb4;
+    --lambda:#ed7100; --data:#3334b9; --ext:#1b7f4d; --ops:#7d3c98;
+    --ink:#1b2733; --muted:#5a6572; --line:#c7ced6; --bg:#f4f6f9;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; font-family:"Segoe UI",Arial,sans-serif; color:var(--ink);
+    background:var(--bg); padding:32px 28px 48px;
+  }
+  header{max-width:1180px; margin:0 auto 22px;}
+  h1{margin:0; font-size:26px; color:var(--navy);}
+  h1 span{color:var(--orange);}
+  .sub{margin:4px 0 0; color:var(--muted); font-size:14px;}
+  .board{max-width:1180px; margin:0 auto; display:flex; flex-direction:column; gap:18px;}
+  .row{display:flex; gap:18px; align-items:stretch; flex-wrap:wrap;}
+  .phase{
+    flex:1; min-width:220px; background:#fff; border:1px solid var(--line);
+    border-radius:14px; padding:14px 14px 16px; box-shadow:0 1px 3px rgba(0,0,0,.06);
+  }
+  .phase h2{
+    margin:0 0 10px; font-size:12px; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--muted); display:flex; align-items:center; gap:8px;
+  }
+  .step{
+    display:inline-flex; align-items:center; justify-content:center; min-width:22px; height:22px;
+    padding:0 6px; border-radius:11px; background:var(--navy); color:#fff; font-size:12px; font-weight:700;
+  }
+  .node{
+    border-radius:10px; padding:10px 12px; margin:8px 0; color:#fff; line-height:1.35;
+  }
+  .node .svc{font-weight:700; font-size:14px;}
+  .node .desc{font-size:12px; opacity:.92;}
+  .node .fn{font-size:11px; margin-top:5px; padding-top:5px; border-top:1px solid rgba(255,255,255,.25); font-style:italic; opacity:.85;}
+  .node .fn b{font-style:normal; opacity:1;}
+  .node .why{font-size:11px; margin-top:5px; padding-top:5px; border-top:1px solid rgba(255,255,255,.25); opacity:.92;}
+  .node .why b{color:#ffd480;}
+  .aws{background:var(--navy); border-left:5px solid var(--orange);}
+  .lambda{background:var(--lambda);}
+  .data{background:var(--data);}
+  .ext{background:var(--ext);}
+  .ops{background:var(--ops);}
+  .flowline{
+    display:flex; align-items:center; justify-content:center; gap:12px; margin:6px 0;
+    color:var(--blue); font-weight:700; font-size:22px;
+  }
+  .arrow-h{font-size:26px; color:var(--blue); align-self:center;}
+  .card-note{font-size:11px; color:var(--muted); margin-top:4px;}
+  .legend{
+    max-width:1180px; margin:22px auto 0; display:flex; gap:16px; flex-wrap:wrap;
+    font-size:12px; color:var(--muted);
+  }
+  .legend span{display:inline-flex; align-items:center; gap:6px;}
+  .dot{width:12px; height:12px; border-radius:3px; display:inline-block;}
+  .callout{
+    max-width:1180px; margin:20px auto 0; background:#fff; border:1px solid var(--line);
+    border-radius:14px; padding:16px 18px;
+  }
+  .callout h3{margin:0 0 8px; font-size:14px; color:var(--navy);}
+  .callout ul{margin:0; padding-left:18px; font-size:13px; line-height:1.6;}
+  .flow-label{font-size:11px; color:var(--muted); text-align:center; margin-top:2px;}
+</style>
+</head>
+<body>
+  <header>
+    <h1><span>Idelia</span> — Centralino AI per studio di psicologia · Architettura AWS</h1>
+    <p class="sub">Serverless · event-driven · Infrastructure as Code (AWS CDK Python) · costo-zero monitorato</p>
+  </header>
+
+  <div class="board">
+
+    <!-- FASE INGRESSO -->
+    <div class="row">
+      <div class="phase" style="flex:1.1;">
+        <h2><span class="step">1</span> Ingresso — due canali</h2>
+        <div class="node aws"><div class="svc">Amazon Connect</div><div class="desc">Telefonia inbound · numero reale</div><div class="why"><b>Perché:</b> contact center gestito, serverless e pay-per-use — evita un centralino telefonico fisico o VoIP da amministrare. Fornisce il numero e porta la voce nel cloud.</div></div>
+        <div class="node aws"><div class="svc">Amazon Lex V2</div><div class="desc">ASR / TTS italiano (Polly), barge-in</div><div class="why"><b>Perché:</b> integrato nativamente con Connect e già pronto per l'italiano (voce + riconoscimento). Trasforma il parlato in testo per il motore, senza costruire un ASR/TTS da zero.</div></div>
+        <div class="card-note">Strato voce — a pagamento, attivabile</div>
+        <div class="node aws" style="margin-top:14px;"><div class="svc">Amazon API Gateway</div><div class="desc">Canale testo /simulate — Free Tier, per test senza telefono</div><div class="why"><b>Perché:</b> espone un endpoint HTTP gestito (auth, throttling) senza gestire web server. Permette di testare tutto il dialogo via testo a costo zero, senza il telefono.</div></div>
+      </div>
+
+      <div class="arrow-h">→</div>
+
+      <!-- FASE CERVELLO -->
+      <div class="phase" style="flex:1.3;">
+        <h2><span class="step">2</span> Cervello conversazionale — serverless</h2>
+        <div class="node lambda"><div class="svc">AWS Lambda · motore-conversazionale</div><div class="desc">Possiede lo stato del dialogo, tool-use, timeout/fallback</div><div class="why"><b>Perché:</b> scelta di mettere la logica qui (non in Lex) per avere libertà di dialogo e controllo su timeout/fallback. Serverless: paga solo quando c'è una chiamata, zero costo a riposo.</div></div>
+        <div class="node aws"><div class="svc">Amazon Bedrock — Claude Haiku 4.5</div><div class="desc">Dialogo in italiano + estrazione strutturata dei dati</div><div class="why"><b>Perché:</b> accesso a LLM via API senza gestire modelli/GPU; Haiku è il più economico e veloce (adatto al vincolo costo-zero). È il "cervello" che capisce il paziente e struttura i dati.</div></div>
+        <div class="node lambda"><div class="svc">AWS Lambda · assegnatore-colloquio</div><div class="desc">Sceglie il primo slot libero</div><div class="why"><b>Perché:</b> responsabilità isolata in una funzione dedicata (disaccoppiamento): la logica degli slot può evolvere senza toccare il motore. Serverless come le altre.</div></div>
+        <div class="node data"><div class="svc">Amazon DynamoDB</div><div class="desc">Single-table: PATIENT / DOCTOR / APPT · sessione dialogo</div><div class="why"><b>Perché:</b> NoSQL serverless on-demand — niente DB server da gestire, scala a zero. Preferito a RDS per il costo-zero a riposo e la velocità su accessi a chiave.</div></div>
+      </div>
+
+      <div class="arrow-h">→</div>
+
+      <!-- FASE ORCHESTRAZIONE -->
+      <div class="phase" style="flex:1.3;">
+        <h2><span class="step">3</span> Orchestrazione conferma 8h</h2>
+        <div class="node aws"><div class="svc">AWS Step Functions</div><div class="desc">confirmation-workflow · race Wait 8h ↔ callback (waitForTaskToken)</div><div class="why"><b>Perché:</b> l'attesa di 8h e la gestione degli stati sarebbero fragili dentro una Lambda (max 15 min, nessuna persistenza). Step Functions gestisce in modo dichiarativo attese lunghe, scelte e retry.</div></div>
+        <div class="node lambda"><div class="svc">AWS Lambda · notificatore-telegram</div><div class="desc">Invia recap + taskToken al gruppo dottoresse</div><div class="why"><b>Perché:</b> un singolo compito (notificare) isolato in una funzione; invocata dallo workflow quando serve, zero costo a riposo.</div></div>
+        <div class="node lambda"><div class="svc">AWS Lambda · telegram-callback</div><div class="desc">Riceve il click · conditional write (mutua esclusione)</div><div class="why"><b>Perché:</b> gestisce il click sul bottone e sblocca lo workflow. La conditional write su DynamoDB garantisce "vince la prima azione" senza lock espliciti.</div></div>
+        <div class="node lambda"><div class="svc">AWS Lambda · scrivi-calendario</div><div class="desc">Su conferma: crea evento definitivo</div><div class="why"><b>Perché:</b> isola l'integrazione col calendario dietro una funzione: il sink (Google oggi, altro domani) è sostituibile senza toccare il resto.</div></div>
+        <div class="node lambda"><div class="svc">AWS Lambda · gestore-consenso</div><div class="desc">Su conferma: email + PDF consenso</div><div class="why"><b>Perché:</b> compito dedicato all'invio del consenso, separato dalla scrittura calendario: ogni passo dello workflow è una funzione a sé, testabile da sola.</div></div>
+        <div class="node aws"><div class="svc">Amazon SES</div><div class="desc">Invio email di consenso</div><div class="why"><b>Perché:</b> servizio email gestito e a basso costo, nativo AWS — evita un server SMTP. Adatto all'invio transazionale (una mail per conferma).</div></div>
+      </div>
+    </div>
+
+    <!-- SISTEMI ESTERNI + TRASVERSALI -->
+    <div class="row">
+      <div class="phase">
+        <h2>Integrazioni esterne</h2>
+        <div class="node ext"><div class="svc">Google Calendar API</div><div class="desc">freebusy + creazione evento colloquio</div><div class="why"><b>Perché:</b> lo studio usa già Google Calendar — ci si integra invece di imporre un nuovo gestionale. Dietro un'astrazione, così domani si può sostituire con un gestionale medico.</div></div>
+        <div class="node ext"><div class="svc">Telegram Bot API</div><div class="desc">Recap con bottoni Conferma / Blocker</div><div class="why"><b>Perché:</b> canale gratuito, immediato e coi bottoni interattivi, già usato dalle dottoresse. Evita di costruire un'app di notifica dedicata.</div></div>
+      </div>
+      <div class="phase">
+        <h2>Sicurezza</h2>
+        <div class="node aws"><div class="svc">AWS Secrets Manager</div><div class="desc">Service Account Google + token bot Telegram (mai nel codice)</div><div class="why"><b>Perché:</b> le credenziali non devono mai stare nel codice o in variabili in chiaro. Letto a runtime con accesso controllato da IAM — scelta di sicurezza by design.</div></div>
+      </div>
+      <div class="phase">
+        <h2>Osservabilità e costi · Well-Architected</h2>
+        <div class="node ops"><div class="svc">Amazon CloudWatch</div><div class="desc">Logs / Metrics</div><div class="why"><b>Perché:</b> monitoraggio nativo di tutti i servizi AWS senza configurare agenti esterni. Serve per diagnosticare il dialogo e verificare che il flusso vada a buon fine.</div></div>
+        <div class="node ops"><div class="svc">AWS Budgets</div><div class="desc">Billing alarm a 1 USD</div><div class="why"><b>Perché:</b> rete di sicurezza sul vincolo costo-zero: avvisa subito se la spesa supera 1 USD. Scelta di cost governance esplicita del progetto.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <span><span class="dot" style="background:var(--navy);"></span> Servizio AWS gestito</span>
+    <span><span class="dot" style="background:var(--lambda);"></span> AWS Lambda (codice)</span>
+    <span><span class="dot" style="background:var(--data);"></span> Dato / storage</span>
+    <span><span class="dot" style="background:var(--ext);"></span> Integrazione esterna</span>
+    <span><span class="dot" style="background:var(--ops);"></span> Osservabilità / costi</span>
+  </div>
+
+  <div class="callout">
+    <h3>Flusso end-to-end (verificato dal vivo)</h3>
+    <ul>
+      <li><b>1 → 2</b> · Il paziente chiama (o scrive). Connect+Lex passano il testo alla Lambda motore, che dialoga via Bedrock e salva i dati in DynamoDB.</li>
+      <li><b>2 → 3</b> · Raccolti i dati, l'assegnatore sceglie lo slot e la Lambda avvia Step Functions (appuntamento in stato PROVVISORIO).</li>
+      <li><b>3</b> · Step Functions notifica Telegram e attende: vince il primo tra il click (conferma/blocker) e il timeout di 8h. La conditional write su DynamoDB garantisce la mutua esclusione.</li>
+      <li><b>3 → fine</b> · Su conferma: evento su Google Calendar + email di consenso via SES. La state machine chiude con esito SUCCEEDED.</li>
+    </ul>
+  </div>
+</body>
+</html>

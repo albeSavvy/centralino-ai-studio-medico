@@ -1,0 +1,6 @@
+# Dev / test dependencies - Centralino AI Studio Medico
+# Include anche i runtime deps per un ambiente di sviluppo completo.
+-r requirements.txt
+
+pytest>=8.0.0
+hypothesis>=6.100.0

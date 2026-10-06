@@ -1,0 +1,8 @@
+# Dipendenze dirette del Lambda layer "google" (accesso Google Calendar).
+# Le transitive (cryptography, protobuf, urllib3, ...) le risolve pip.
+# Ricostruire con:
+#   pip install -r layers/google/requirements.txt -t layers/google/python
+# Versioni pinnate a quelle usate/verificate (set 2026).
+google-api-python-client==2.200.0
+google-auth==2.58.1
+google-auth-httplib2==0.4.2
