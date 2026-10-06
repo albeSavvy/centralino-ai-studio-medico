@@ -95,8 +95,8 @@ pagamento e gated: Amazon Connect, Amazon Lex V2, Amazon Bedrock reale.
 
 ## Decisioni architetturali chiave
 
-Sei questioni aperte risolte in fase di design (dettaglio in
-[`.kiro/specs/centralino-ai-studio-medico/design.md`](../../.kiro/specs/centralino-ai-studio-medico/design.md)):
+Sei questioni aperte risolte in fase di design (dettaglio con i trade-off completi in
+[`docs/decisioni-architetturali.md`](docs/decisioni-architetturali.md)):
 
 1. **Dove vive il "cervello".** Amazon Connect -> Lex V2 (thin, solo voce/ASR/TTS)
    -> **Lambda orchestratrice -> Bedrock**. La logica conversazionale vive nella
