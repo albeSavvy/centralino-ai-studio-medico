@@ -4,8 +4,8 @@
 > una fase cambia stato. Riferimento alle fasi: steering `project-checklist.md`.
 
 **Progetto AI?** sì (Amazon Bedrock, dialogo semantico)
-**Prossima fase da fare:** 4 — GitHub
-**Ultimo aggiornamento:** 2026-10-02
+**Prossima fase da fare:** 6 — LinkedIn (post + link repo). Fase 5 (Articolo Builder Center) opzionale, consigliata come evidenza Community Builder
+**Ultimo aggiornamento:** 2026-10-06
 
 Legenda stato: ✅ fatto · 🔄 in corso · ⏳ da fare · ⏭️ saltata (non applicabile)
 
@@ -15,9 +15,10 @@ Legenda stato: ✅ fatto · 🔄 in corso · ⏳ da fare · ⏭️ saltata (non 
 | 1 | Costruire (stato presentabile) | ✅ | Completo e verificato end-to-end (telefono + chat): dialogo → prenotazione → Telegram → Calendar → SES. 190 test verdi |
 | 2 | Slide HTML di presentazione | ✅ | `docs/presentazione.html` (deck 6 slide) |
 | 3 | Diagramma Mermaid | ✅ | Diagramma Mermaid di Idelia prodotto (freccia bidirezionale Motore↔Bedrock). Anche `docs/architettura.html` (diagramma dettagliato con "Perché") |
-| 4 | GitHub (repo su albeSavvy) | ⏳ | Da fare. Prima: verificare `.gitignore` (SA json, layer, .env già esclusi) |
-| 5 | LinkedIn (post + link repo) | ⏳ | Dopo la fase 4. Taglio "operational → business logic" |
-| 6 | Chiusura (teardown costi + registro) | 🔄 | Teardown fatto più volte dopo i test (numero rilasciato, cdk destroy). Registro `aws-projects.md` aggiornato. DA FARE a fine giornata: rilasciare numero demo + revocare token Telegram (passato in chiaro) |
+| 4 | GitHub (repo su albeSavvy) | ✅ | **Pubblicato** (06/10/2026): [github.com/albeSavvy/centralino-ai-studio-medico](https://github.com/albeSavvy/centralino-ai-studio-medico). Repo pubblico, 65 file, nessun segreto (SA json, `_num.txt`, materiale presentazione esclusi). GitHub Pages attivo per `docs/architettura.html`. README con sezione Documentazione |
+| 5 | Articolo Builder Center | ⏳ | Opzionale ma consigliato (evidenza Community Builder 2027). Articolo tecnico su `builder.aws.com`: problema, architettura, decisioni e trade-off. Riusa `docs/decisioni-architetturali.md` |
+| 6 | LinkedIn (post + link repo) | ⏳ | Dopo la fase 4. Taglio "operational → business logic" |
+| 7 | Chiusura (teardown costi + registro) | 🔄 | Teardown fatto più volte dopo i test (numero rilasciato, cdk destroy). Registro `aws-projects.md` aggiornato. DA FARE a fine giornata: rilasciare numero demo + revocare token Telegram (passato in chiaro) |
 
 ## Note di avanzamento
 
