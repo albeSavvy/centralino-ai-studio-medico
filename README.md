@@ -28,7 +28,7 @@ Well-Architected, costo-zero monitorato, dati finti.
 **📂 Documentazione estesa (cartella [`docs/`](docs/)):**
 
 - 📄 [Decisioni architetturali & trade-off](docs/decisioni-architetturali.md) — il "perché" di ogni servizio, alternative scartate, narrativa operational → business logic
-- 🗺️ [Diagramma visuale dettagliato](docs/architettura.html) — _(file HTML: scaricare e aprire nel browser)_
+- 🗺️ [Diagramma visuale dettagliato](https://albesavvy.github.io/centralino-ai-studio-medico/docs/architettura.html) — pagina interattiva con il "perché" di ogni scelta (via GitHub Pages)
 
 ## Architettura
 
