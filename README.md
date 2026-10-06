@@ -25,6 +25,11 @@ Well-Architected, costo-zero monitorato, dati finti.
 - [Tabella costi per componente](#tabella-costi-per-componente)
 - [Deploy e costi](#deploy-e-costi)
 
+**📂 Documentazione estesa (cartella [`docs/`](docs/)):**
+
+- 📄 [Decisioni architetturali & trade-off](docs/decisioni-architetturali.md) — il "perché" di ogni servizio, alternative scartate, narrativa operational → business logic
+- 🗺️ [Diagramma visuale dettagliato](docs/architettura.html) — _(file HTML: scaricare e aprire nel browser)_
+
 ## Architettura
 
 Sistema serverless ed event-driven: nessun server always-on. Lo strato voce

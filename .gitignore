@@ -25,5 +25,10 @@ spring-monolith-*.json
 # Dati operativi locali (numero Connect + id). NON committare.
 _num.txt
 
+# Materiale di presentazione/interno — tenuto in locale, fuori dal repo pubblico.
+docs/stato-per-manager.md
+docs/ai-act-compliance.md
+docs/presentazione.html
+
 # IDE / OS
 .DS_Store
