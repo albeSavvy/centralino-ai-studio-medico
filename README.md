@@ -9,9 +9,8 @@ assegna un primo colloquio a Chiara o Francesca, registra un appuntamento in
 conferma di 8 ore, scrive l'evento su Google Calendar e invia al paziente
 l'email con il modulo di consenso.
 
-Doppio obiettivo: uso reale per lo studio + artefatto per colloquio AWS
-Solutions Architect. Architettura disaccoppiata, IaC in AWS CDK Python, allineata
-Well-Architected, costo-zero monitorato, dati finti.
+Architettura disaccoppiata, IaC in AWS CDK Python, allineata Well-Architected,
+costo-zero monitorato, dati finti.
 
 > Stato: implementazione IaC completa (CDK Python). Componenti a pagamento
 > (Amazon Connect, Amazon Bedrock reale) disabilitati di default. Vedi
