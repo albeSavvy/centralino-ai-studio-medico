@@ -70,7 +70,7 @@
 </head>
 <body>
   <header>
-    <h1><span>Idelia</span> — Centralino AI per studio di psicologia · Architettura AWS</h1>
+    <h1><span>Idelia</span> — Centralino AI (progetto di studio AWS) · Architettura</h1>
     <p class="sub">Serverless · event-driven · Infrastructure as Code (AWS CDK Python) · costo-zero monitorato</p>
   </header>
 
@@ -115,8 +115,8 @@
     <div class="row">
       <div class="phase">
         <h2>Integrazioni esterne</h2>
-        <div class="node ext"><div class="svc">Google Calendar API</div><div class="desc">freebusy + creazione evento colloquio</div><div class="why"><b>Perché:</b> lo studio usa già Google Calendar — ci si integra invece di imporre un nuovo gestionale. Dietro un'astrazione, così domani si può sostituire con un gestionale medico.</div></div>
-        <div class="node ext"><div class="svc">Telegram Bot API</div><div class="desc">Recap con bottoni Conferma / Blocker</div><div class="why"><b>Perché:</b> canale gratuito, immediato e coi bottoni interattivi, già usato dalle dottoresse. Evita di costruire un'app di notifica dedicata.</div></div>
+        <div class="node ext"><div class="svc">Google Calendar API</div><div class="desc">freebusy + creazione evento colloquio</div><div class="why"><b>Perché:</b> nello scenario si assume un calendario Google già esistente — ci si integra invece di imporre un nuovo gestionale. Dietro un'astrazione, così il sink è sostituibile senza toccare il motore.</div></div>
+        <div class="node ext"><div class="svc">Telegram Bot API</div><div class="desc">Recap con bottoni Conferma / Blocker</div><div class="why"><b>Perché:</b> canale gratuito, immediato e coi bottoni interattivi. Evita di costruire un'app di notifica dedicata.</div></div>
       </div>
       <div class="phase">
         <h2>Sicurezza</h2>

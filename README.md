@@ -1,13 +1,17 @@
-# Centralino AI Studio Medico (Idelia) — Flusso A
+# Centralino AI (Idelia) — progetto di studio AWS
 
-Centralino intelligente su AWS per uno studio di psicologia (sede appuntamenti:
-**Meda**). Riceve chiamate inbound, dialoga in italiano tramite un LLM su Amazon
-Bedrock, raccoglie i dati del paziente secondo il modello del modulo cartaceo,
-classifica l'esito della chiamata e — nel caso di richiesta appuntamento —
-assegna un primo colloquio a Chiara o Francesca, registra un appuntamento in
-`PROVVISORIO`, notifica il gruppo dottoresse su Telegram con una finestra di
-conferma di 8 ore, scrive l'evento su Google Calendar e invia al paziente
-l'email con il modulo di consenso.
+> **Progetto didattico.** Realizzato per studiare in pratica i servizi AWS
+> (serverless, event-driven, IaC) su uno scenario di esempio. Scenario e dati
+> sono puramente illustrativi e fittizi: il sistema non è destinato né utilizzato
+> in alcun contesto reale.
+
+Scenario di esempio: un centralino intelligente su AWS che gestisce la
+prenotazione di appuntamenti. Riceve chiamate inbound, dialoga in italiano
+tramite un LLM su Amazon Bedrock, raccoglie i dati del richiedente, classifica
+l'esito della chiamata e — nel caso di richiesta appuntamento — assegna uno slot,
+registra un appuntamento in `PROVVISORIO`, notifica un gruppo di conferma su
+Telegram con una finestra di 8 ore, scrive l'evento su Google Calendar e invia
+un'email di conferma.
 
 Architettura disaccoppiata, IaC in AWS CDK Python, allineata Well-Architected,
 costo-zero monitorato, dati finti.

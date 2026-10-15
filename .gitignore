@@ -32,3 +32,6 @@ docs/presentazione.html
 
 # IDE / OS
 .DS_Store
+
+# File di gestione interno (ciclo di vita progetto) - non nel repo pubblico
+docs/project-lifecycle.md

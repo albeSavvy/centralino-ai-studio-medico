@@ -39,7 +39,7 @@
   GSI1 per nome, GSI2 per stato), billing on-demand.
 - **Trade-off accettato:** niente join/query ad-hoc relazionali e design degli
   accessi più rigido in cambio di zero idle cost, latenza bassa e scalabilità
-  automatica. Per i volumi di uno studio è la scelta giusta.
+  automatica. Per i volumi di questo scenario è la scelta giusta.
 
 ### 3. Auth Google Calendar: Service Account + provider astratto
 - **Problema:** scrivere sul calendario senza esporre credenziali e potendo
@@ -73,16 +73,19 @@
 - **Trade-off accettato:** un ramo di logica in più, necessario per correttezza
   legale e di dominio.
 
-## Narrativa per il colloquio: operational → business logic
+## Narrativa architetturale: operational → business logic
 
-Idelia nasce come automazione **operativa** (rispondere al telefono e non perdere
-richieste). È stata poi evoluta in **logica di business con stati**: conferma
-umana, gestione del blocker, finestra temporale di 8h, consenso. È il salto che
-dimostra pensiero da Solutions Architect — non "quale servizio aggiungo" ma "quale
-problema risolvo e quale trade-off accetto".
+Lo scenario parte da un'automazione **operativa** (gestire la richiesta in arrivo)
+e viene evoluto in **logica di business con stati**: conferma umana, gestione del
+blocker, finestra temporale di 8h. È il tipo di ragionamento che si studia
+lavorando sui servizi AWS — non "quale servizio aggiungo" ma "quale problema
+risolvo e quale trade-off accetto".
 
-## Conformità (EU AI Act)
+## Nota didattica — compliance EU AI Act
 
-Classificato **rischio limitato**: Idelia instrada e prenota, non dà consigli
-clinici né analizza emozioni. Unico obbligo applicabile: trasparenza (Art. 50) —
-dichiarare che è un assistente AI. Dettaglio in `docs/ai-act-compliance.md`.
+Come esercizio di studio, ho esplorato anche come un assistente conversazionale AI
+di questo tipo si classificherebbe rispetto all'EU AI Act: rientrerebbe nel
+**rischio limitato** (instrada e prenota, non prende decisioni critiche né analizza
+emozioni), con il principale obbligo applicabile che è la trasparenza (Art. 50 —
+dichiarare che si sta interagendo con un'AI). È un approfondimento teorico sul tema
+governance, non legato ad alcun utilizzo reale.

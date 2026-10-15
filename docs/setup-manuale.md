@@ -1,4 +1,4 @@
-# Setup manuale — Idelia / Centralino AI Studio di Psicologia
+# Setup manuale — Idelia / Centralino AI (progetto di studio AWS)
 
 > Guida passo-passo per configurare e testare il sistema, ordinata dal meno
 > impegnativo (costo-zero, subito) al più (voce, a pagamento). L'implementazione
