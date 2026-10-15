@@ -1,9 +1,8 @@
 # Idelia — Decisioni architetturali (perché questo servizio e non un altro)
 
-> Documento di dettaglio per la review col mentor. Accompagna le slide
-> (`docs/presentazione.html`) e il diagramma (`README.md` / `docs/architettura.html`).
-> Qui il focus è il **ragionamento ad albero**: problema → vincoli → alternative
-> → scelta → trade-off accettato.
+> Documento di dettaglio delle scelte architetturali. Accompagna il diagramma
+> (`README.md` / `docs/architettura.html`). Il focus è il **ragionamento ad
+> albero**: problema → vincoli → alternative → scelta → trade-off accettato.
 
 ## Mappa dei servizi (cosa fa cosa)
 
