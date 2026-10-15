@@ -6,16 +6,16 @@
 
 ## Mappa dei servizi (cosa fa cosa)
 
-| Funzione | Servizio scelto | Alternativa scartata | Perché |
-|----------|-----------------|----------------------|--------|
-| Telefonia / voce | Amazon Connect + Lex V2 | Twilio, SIP self-managed | Managed, pay-per-use, integrazione nativa con Lambda; niente server voce da gestire |
-| Cervello conversazionale | Lambda + Amazon Bedrock | "Lex intelligente" (intent/slot) | Libertà semantica, testabilità senza voce, controllo su timeout/fallback |
-| Stato conversazione e dati | DynamoDB single-table | RDS / Aurora | Serverless, zero idle, latenza bassa, accesso per chiave; niente relazioni complesse |
-| Orchestrazione conferma 8h | Step Functions | Lambda + self-polling / SQS delay | Attesa lunga nativa, stati espliciti, race wait↔callback gestita dal servizio |
-| Notifica + conferma umana | Lambda + Telegram Bot API | SNS / email con link | Bottoni inline, gruppo già usato dalle dottoresse, callback immediato |
-| Scrittura appuntamento | Google Calendar (via provider astratto) | Scrittura diretta nel codice | Sink sostituibile (gestionale sanitario poi) senza toccare il motore |
-| Email di consenso | Amazon SES | SMTP esterno / SNS | Managed, economico, allegato PDF, integrazione IAM |
-| Segreti | AWS Secrets Manager | Variabili d'ambiente / file | Mai credenziali nel codice, rotazione, lettura a runtime con IAM minimo |
+| Funzione | Servizio scelto | Alternativa scartata (perché no) | Perché sì |
+|----------|-----------------|----------------------------------|-----------|
+| Telefonia / voce | Amazon Connect + Lex V2 | Twilio / SIP self-managed — *server voce da gestire, fuori dall'ecosistema AWS/IAM* | Managed, pay-per-use, integrazione nativa con Lambda |
+| Cervello conversazionale | Lambda + Amazon Bedrock | "Lex intelligente" (intent/slot) — *menù rigido, poca libertà semantica, difficile da testare senza voce* | Libertà semantica, testabilità senza voce, controllo su timeout/fallback |
+| Stato conversazione e dati | DynamoDB single-table | RDS / Aurora — *always-on (idle cost) + connection pooling da gestire in Lambda* | Serverless, zero idle, latenza bassa, accesso per chiave |
+| Orchestrazione conferma 8h | Step Functions | Lambda self-polling / SQS delay — *attesa di 8h fragile a mano, nessuno stato visibile* | Attesa lunga nativa, stati espliciti, race wait↔callback gestita dal servizio |
+| Notifica + conferma umana | Lambda + Telegram Bot API | SNS / email con link — *niente bottoni interattivi, callback non immediato* | Bottoni inline, callback immediato, canale gratuito |
+| Scrittura appuntamento | Google Calendar (via provider astratto) | Scrittura diretta nel codice — *sink cablato, non sostituibile senza toccare il motore* | Dietro un'interfaccia: sink sostituibile senza toccare il motore |
+| Email di consenso | Amazon SES | SMTP esterno / SNS — *server SMTP da amministrare / SNS non adatto a email con allegato* | Managed, economico, allegato PDF, integrazione IAM |
+| Segreti | AWS Secrets Manager | Variabili d'ambiente / file — *credenziali esposte nel codice/config, niente rotazione* | Credenziali fuori dal codice, rotazione, lettura a runtime con IAM minimo |
 | Osservabilità e costi | CloudWatch + AWS Budgets | — | Log/metriche nativi + billing alarm a 1 USD |
 
 ## Le 6 decisioni chiave (con trade-off)
