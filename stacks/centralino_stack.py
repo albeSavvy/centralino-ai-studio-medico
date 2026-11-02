@@ -513,7 +513,7 @@ class CentralinoStack(Stack):
     def _create_external_secrets(self) -> None:
         """Crea i secret dei servizi esterni (Google, Telegram) VUOTI.
 
-        Secret safety (aws-agent-rules): lo stack crea i contenitori dei segreti
+        Secret safety (rules-workspace): lo stack crea i contenitori dei segreti
         ma NON i valori. Alberto li popola a mano dopo il deploy (console o CLI
         `put-secret-value`). Cosi' nessun valore di segreto entra mai nel codice,
         nel template CloudFormation o nel repo.

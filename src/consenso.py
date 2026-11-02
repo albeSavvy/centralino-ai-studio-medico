@@ -36,7 +36,7 @@ Semantica di resilienza (design.md - Gestione errori e resilienza):
   In NESSUN caso il Gestore_Consenso declassa lo stato dell'appuntamento: la
   gestione del consenso e best-effort e non altera l'esito della conferma.
 
-Secret safety (regola di workspace aws-agent-rules): questo modulo non maneggia
+Secret safety (regola di workspace rules-workspace): questo modulo non maneggia
 segreti in chiaro; l'accesso a S3/SES avviene tramite il ruolo IAM least-privilege
 della Lambda (Task 12 in CDK, gia' previsto in design.md - Sicurezza). Nessun
 valore sensibile e' loggato.

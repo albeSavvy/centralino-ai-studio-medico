@@ -24,7 +24,7 @@ e Step Functions. Il percorso reale (boto3) e' marcato # pragma: no cover: non e
 esercitato nei test (costo zero, nessuna rete). La transizione di stato e la mutua
 esclusione sono coperte dai property test di Task 10.1.
 
-Secret safety (regola di workspace aws-agent-rules): il secret token del webhook
+Secret safety (regola di workspace rules-workspace): il secret token del webhook
 vive in Secrets Manager, letto a runtime, mai loggato ne incluso nella risposta.
 
 Riferimento: design.md sezione "Decisione 4" (mutua esclusione + SendTaskSuccess),

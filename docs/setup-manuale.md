@@ -22,7 +22,7 @@ successive aggiungono un pezzo alla volta. La voce (Connect) è l'ultima, a paga
 Obiettivo: vedere Idelia dialogare via testo, con Bedrock **mockato** (nessun
 costo). Serve solo il tuo account AWS.
 
-1. `aws login` — credenziali AWS attive. (Riferimento account: steering `#aws-accounts`.)
+1. `aws login` — credenziali AWS attive. (Riferimento account: steering globale `accounts-aws-own`.)
 2. Dalla cartella del progetto:
    - `cdk bootstrap` (una tantum per account/region — region: **us-east-1**)
    - `cdk deploy` (default: componenti a pagamento OFF)

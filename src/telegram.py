@@ -19,7 +19,7 @@ Questo modulo contiene la logica PURA e testabile del Notificatore_Telegram
     da un secret_loader INIETTATO (Secrets Manager a runtime) e non viene mai
     loggato ne incluso nel recap/tastiera.
 
-Secret safety (regola di workspace aws-agent-rules):
+Secret safety (regola di workspace rules-workspace):
   - Il token del bot vive in AWS Secrets Manager e viene letto A RUNTIME tramite
     il callable secret_loader iniettato. Nei test si inietta un loader fittizio:
     nessuna chiamata secretsmanager get-secret-value nei percorsi coperti dai
